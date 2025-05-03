@@ -1,0 +1,52 @@
+<form [formGroup]="characterForm" (ngSubmit)="onSubmit()" class="character-form">
+  <div class="form-header">
+    <mat-form-field appearance="fill">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Raça</mat-label>
+      <mat-select formControlName="race">
+        <mat-option *ngFor="let race of races" [value]="race">{{ race }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Classe</mat-label>
+      <mat-select formControlName="class">
+        <mat-option *ngFor="let cls of classes" [value]="cls">{{ cls }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" type="button" (click)="rollAttributes()" class="roll-btn">
+      <mat-icon>casino</mat-icon>
+      Rolar Atributos
+    </button>
+  </div>
+
+  <div class="attributes-grid">
+    <div class="attribute-row" *ngFor="let attr of attNames">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ attr | titlecase }}</mat-label>
+        <input matInput type="number" formControlName="{{ attr }}" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Mod. Raça</mat-label>
+        <input matInput [value]="characterForm.get(attr + 'RaceModifier')?.value" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Mod. Classe</mat-label>
+        <input matInput [value]="characterForm.get(attr + 'ClassModifier')?.value" disabled />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Mod. Final</mat-label>
+        <input matInput [value]="getFinalModifier(attr)" disabled />
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-footer">
+    <button mat-raised-button color="primary" type="submit">Salvar Ficha</button>
+  </div>
+</form>

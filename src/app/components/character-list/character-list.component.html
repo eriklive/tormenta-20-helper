@@ -1,0 +1,23 @@
+<div class="character-list-container">
+    <ng-container *ngIf="characters.length === 0; else list">
+      <p class="empty-message">Nenhuma ficha salva.</p>
+    </ng-container>
+    <ng-template #list>
+      <div class="card-grid">
+        <mat-card class="character-card" *ngFor="let character of characters" (click)="goToCharacter(character.id)">
+          <mat-card-header>
+            <div mat-card-avatar class="avatar">
+              <mat-icon>person</mat-icon>
+            </div>
+            <mat-card-title>{{ character.name }}</mat-card-title>
+            <mat-card-subtitle>{{ character.race }} • {{ character.class }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-actions>
+            <button mat-icon-button color="primary" (click)="goToCharacter(character.id); $event.stopPropagation();" aria-label="Ver ficha">
+              <mat-icon>visibility</mat-icon>
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </ng-template>
+  </div>
